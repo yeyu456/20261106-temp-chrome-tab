@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>收纳箱</title>
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18v4H3z" />
+          <path d="M4.6 10v8.1A1.9 1.9 0 0 0 6.5 20h11a1.9 1.9 0 0 0 1.9-1.9V10" />
+          <path d="M9.6 14h4.8" />
+        </svg>
+        <span class="brand-name">收纳箱</span>
+        <span class="count-pill" id="countPill" hidden>0</span>
+      </div>
+      <button class="icon-btn" id="settingsBtn" type="button" title="设置" aria-label="设置">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.2" />
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1.11 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z" />
+        </svg>
+      </button>
+    </header>
+
+    <section class="park-section">
+      <button class="park-btn" id="parkBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4v9.5" />
+          <path d="m8.3 10.2 3.7 3.7 3.7-3.7" />
+          <path d="M4.5 15.5v3A1.5 1.5 0 0 0 6 20h12a1.5 1.5 0 0 0 1.5-1.5v-3" />
+        </svg>
+        <span id="parkLabel">收纳其他 0 个标签页</span>
+      </button>
+      <p class="park-hint" id="parkHint">只保留当前页，其余收进箱子</p>
+    </section>
+
+    <section class="search">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="10.8" cy="10.8" r="6.8" />
+        <path d="m20 20-4.2-4.2" />
+      </svg>
+      <input
+        id="search"
+        type="search"
+        placeholder="搜索已收纳的标签…"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="搜索已收纳的标签"
+      />
+    </section>
+
+    <main class="list" id="list"></main>
+
+    <div class="empty" id="empty" hidden>
+      <svg class="empty-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6h18v4H3z" />
+        <path d="M4.6 10v8.1A1.9 1.9 0 0 0 6.5 20h11a1.9 1.9 0 0 0 1.9-1.9V10" />
+        <path d="M9.6 14h4.8" />
+      </svg>
+      <p class="empty-title" id="emptyTitle">箱子是空的</p>
+      <p class="empty-desc" id="emptyDesc">点上面的按钮，把当前窗口里不用的标签页收进来。</p>
+    </div>
+
+    <footer class="footer" id="footer" hidden>
+      <span id="footerCount">共 0 个标签页</span>
+      <button class="link-btn" id="clearBtn" type="button">全部清空</button>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span id="toastText"></span>
+      <button class="toast-action" id="undoBtn" type="button">撤销</button>
+    </div>
+
+    <dialog class="sheet" id="settingsDialog">
+      <h2>设置</h2>
+      <label class="setting-row">
+        <span class="setting-text">
+          <b>跳过固定标签页</b>
+          <small>收纳时保留固定标签页，不动它们</small>
+        </span>
+        <input class="switch" id="skipPinned" type="checkbox" />
+      </label>
+      <label class="setting-row">
+        <span class="setting-text">
+          <b>跳过正在播放声音的标签页</b>
+          <small>避免关掉音乐、会议或视频</small>
+        </span>
+        <input class="switch" id="skipAudible" type="checkbox" />
+      </label>
+      <div class="setting-note">
+        <p>
+          快捷键 <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> 可以随时收纳当前窗口的其他标签页，也能在
+          <code>chrome://extensions/shortcuts</code> 里改。
+        </p>
+        <p>所有数据只保存在本机浏览器里，不会上传。</p>
+      </div>
+      <div class="sheet-actions">
+        <button class="btn" id="settingsClose" type="button">完成</button>
+      </div>
+    </dialog>
+
+    <dialog class="sheet" id="confirmDialog">
+      <h2 id="confirmTitle">确认</h2>
+      <p class="confirm-desc" id="confirmDesc"></p>
+      <div class="sheet-actions">
+        <button class="btn btn-ghost" id="confirmCancel" type="button">取消</button>
+        <button class="btn btn-danger" id="confirmOk" type="button">确定</button>
+      </div>
+    </dialog>
+
+    <script type="module" src="panel.js"></script>
+  </body>
+</html>
